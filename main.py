@@ -38,13 +38,22 @@ while True:
                 frame[y:y+h, x+w:x+2*w] = face
                 
                 inc = intw
+                inc2 = inc
+                inc3 = inth
                 if w - intw > inth:
                     # print 'switching'
                     inc = intw + 1
+                if inc > inth:
+                    inc2 = inc - 1
+                if w - inth > inth:
+                    inc3 = inth + 1
                 # print 'small', inth, x - w
                 # print smaller_face.shape
                 if smaller_face.shape[1] != 0 and size == 0:
                     frame[y:y+intw, x-w:x-inc] = smaller_face
+                    frame[y:y+inth, x-inc2:x] = smaller_face
+                    frame[y+inc3:y+w, x-w:x-inc] = smaller_face
+                    frame[y+inc3:y+w, x-inc2:x] = smaller_face
         if y + h < frame.shape[0]:
             if y - h > 0:
                 frame[y-h:y, x:x+w] = face
