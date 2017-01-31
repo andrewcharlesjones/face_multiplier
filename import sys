@@ -1,0 +1,28 @@
+import sys
+import matplotlib.pyplot as plt
+
+sys.path.insert(0, '/media/data/gitcodebase/caffe/python')
+# sys.path.insert(0, '/home/andrew/caffe/python')
+import caffe
+import numpy as np
+
+
+net = caffe.Net('models/bvlc_reference_caffenet/fcn_deploy.prototxt', 'models/bvlc_reference_caffenet/fcn_weights.caffemodel', caffe.TEST)
+
+# img_name = 'examples/images/cat.jpg'
+img_name = '/media/data_cifs/ajones/tensorbox_evals/frame_extractions/1886_SceneTrim.mp4_21173.png'
+# im = caffe.io.load_image('/media/data_cifs/ajones/tensorbox_evals/frame_extractions/2058_SceneTrim.mp4_30266.png')
+im = caffe.io.load_image(img_name)
+
+transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
+transformer.set_mean('data', np.load('/media/data/gitcodebase/caffe/python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(1))
+# transformer.set_mean('data', 104)
+transformer.set_transpose('data', (2,0,1))
+transformer.set_channel_swap('data', (2,1,0))
+transformer.set_raw_scale('data', 255.0)
+
+out = net.forward_all(data=np.asarray([transformer.preprocess('data', im)]))
+
+plt.imshow(out['prob'][0,0])
+print out['prob'][0].argmax(axis=0)
+

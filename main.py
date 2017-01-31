@@ -47,8 +47,6 @@ while True:
                     inc2 = inc - 1
                 if w - inth > inth:
                     inc3 = inth + 1
-                # print 'small', inth, x - w
-                # print smaller_face.shape
                 if smaller_face.shape[1] != 0 and size == 0:
                     frame[y:y+intw, x-w:x-inc] = smaller_face
                     frame[y:y+inth, x-inc2:x] = smaller_face
@@ -60,16 +58,9 @@ while True:
             if y + 2 * h < frame.shape[0]:
                 frame[y+h:y+2*h, x:x+w] = face
 
-
+    cv2.putText(frame, "Push 'a' to make the faces smaller",(50, 50),cv2.FONT_HERSHEY_COMPLEX_SMALL,.7,(0,0,255))
     cv2.imshow('Video', frame)
 
-    # print intw, inth, len([y+inth]), len([x-w:x-intw-1])
-    # print 'small', (y, y+inth), (x-w, x-intw)
-    # print smaller_face.shape
-
-    # if cv2.waitKey(1) & 0xFF == ord('a'):
-    #     frame[y:y+inth, x-w:x-intw] = smaller_face
-    #     print 'big'
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
     if cv2.waitKey(1) & 0xFF == ord('a'):
