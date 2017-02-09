@@ -58,7 +58,7 @@ while True:
             if y + 2 * h < frame.shape[0]:
                 frame[y+h:y+2*h, x:x+w] = face
 
-        #### NEED TO ADD IN RIGHT SIDE SMALLER IMS ####
+        #### NEED TO ADD IN RIGHT, TOP, AND BOTTOM SIDES SMALLER IMS ####
 
     cv2.putText(frame, "Push 'a' to make the faces smaller",(50, 50),cv2.FONT_HERSHEY_COMPLEX_SMALL,.7,(0,0,255))
     cv2.imshow('Video', frame)
